@@ -1,18 +1,5 @@
-iF.SVNAdmin
-===========
-The iF.SVNAdmin application is a web based GUI to your Subversion authorization 
-file. It is based on PHP 5.3 and requires a web server (Apache) to be installed. 
-The application doesn’t need a database back end or anything similar, it 
-completely based on the Subversion authorization- and user authentication file. 
-(+Inludes LDAP support for users and groups)
+# IF.SVNAdmin
 
-
-Documentation
--------------
-Documentation about installation and configuration can be found on the project homepage.
-[http://svnadmin.insanefactory.com/](http://svnadmin.insanefactory.com/)
-
-
-Who is responsible for this crap?
----------------------------------
-&copy; 2009-2012 Manuel Freiholz, [insaneFactory.com](http://www.insanefactory.com/)
+#### 介绍
+基于原IF.SVNAdmin 1.6.2版本修改。
+修改功能如下：<p>1、原版本依赖Apache，修改版本无需依赖。</p><p>2、去除 IF.SVNAdmin 密码加密</p><p>3、创建仓库时，基于设定好的svnserve.conf模板文件</p>

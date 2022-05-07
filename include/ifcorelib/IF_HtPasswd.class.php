@@ -122,7 +122,7 @@ class IF_HtPasswd
     return true;
   }
 
-  public function changePassword($username, $newpass, $crypt=true)
+  public function changePassword($username, $newpass, $crypt=false)
   {
     if (self::userExists($username))
     {
@@ -210,27 +210,10 @@ class IF_HtPasswd
       	// CRYPT (only unix)
       	else
       	{
-      		// The different length of salts.
-      		$crypt_types = array("STD-DES" => 2, "EXT-DES" => 9, "MD5" => 12, "BLOWFISH" => 16);
-
-      		foreach ($crypt_types as $type=>$len)
-      		{
-      			$salt = substr($pass, 0, $len);
-      			$password_crypted = self::crypt_unix($password, $salt);
-
-//	          echo "Type: CRYPT (Unix only)\n";
-//	          echo "Hash-Type: ".$type."\n";
-//	          echo "Password-In-File: ".$pass."\n";
-//	          echo "Password-Salt   : ".$salt."\n";
-//	          echo "Password-Crypted: ".$password_crypted."\n";
-//	          echo "\n";
-
-	          if ($password_crypted == $pass)
-	            return true;
-	          else
-	            continue;
-      		}
-      		return false;
+          if ($password == $pass)
+            return true;
+          else
+            return false;
       	}
       }
     }
@@ -282,7 +265,7 @@ class IF_HtPasswd
       // Split the line by ':'.
       // [0] = Username
       // [1] = Crypted password
-      $values = explode( ":", $line );
+      $values = explode( " = ", $line );
 
       if( count( $values ) == 2 )
       {
@@ -310,9 +293,13 @@ class IF_HtPasswd
     // Open file and write the array of users to it.
     $fh = fopen( $filename, "w" );
     flock( $fh, LOCK_EX );
+
+    $txtHead="[users]\n";
+    fwrite( $fh, $txtHead, strlen( $txtHead ) );
+
     foreach( $this->m_data as $usr=>$pwd )
     {
-      $line = $usr.":".$pwd."\n";
+      $line = $usr." = ".$pwd."\n";
       fwrite( $fh, $line, strlen( $line ) );
     }
     flock( $fh, LOCK_UN );
@@ -347,7 +334,7 @@ class IF_HtPasswd
   			return self::crypt_apr1_md5($plainpasswd);
 
   		default:
-  			return self::crypt_apr1_md5($plainpasswd);
+  			return $plainpasswd;
   	}
   }
 

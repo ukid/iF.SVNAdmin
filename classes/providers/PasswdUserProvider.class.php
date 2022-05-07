@@ -120,7 +120,7 @@ namespace svnadmin\providers
     {
       if( $objUser != NULL && !empty($objUser->name) && !empty($objUser->password) )
       {
-        return $this->m_userfile->createUser( $objUser->name, $objUser->password, true );
+        return $this->m_userfile->createUser( $objUser->name, $objUser->password, false );
       }
     }
 

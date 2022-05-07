@@ -270,7 +270,7 @@ class IF_HtDigest
   
   private function digest_password($username, $password)
   {
-    return md5($username.":".$this->m_realm.':'.$password);
+    return $password;
   }
  
 }

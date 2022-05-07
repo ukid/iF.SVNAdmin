@@ -91,7 +91,12 @@ class IF_SVNAdminC extends IF_SVNBaseC
 		$output = null;
 		$exitCode = 0;
 		exec($cmd, $output, $exitCode);
-
+        //删除config文件夹中的文件
+		$deleteConfigCMD = "rf -f ".$path."/conf/*";
+		exec($deleteConfigCMD);
+		//将模板文件移动至仓库下
+		$cpConfFile = "cp ".$path."/../config/svnserve.conf ".$path."/conf/";
+		exec($cpConfFile);
 		if ($exitCode != 0)
 		{
 			throw new IF_SVNCommandExecutionException('Command='.$cmd.'; Return='.$exitCode.'; Output='.$output.';');
